@@ -28,50 +28,31 @@ public class QuickSortAlgorithmInPlace<T extends Comparable<T>> implements SortA
 
                 if (lowToPiv < 0) {
                     // low < piv
-                    if (pivToHig < 0) {
+                    if (pivToHig <= 0) {
                         // low < piv < hig
-                        doNothing();
-                    } else if (pivToHig == 0) {
-                        // low < piv = hig
                         doNothing();
                     } else {
                         // low < piv, hig < piv
                         var lowToHig = low.compareTo(hig);
-                        if (lowToHig < 0) {
+                        if (lowToHig <= 0) {
                             // low < hig < piv
-                            list.set(pivIdx, hig);
-                            list.set(higIdx, piv);
-                            pivIdx = higIdx;
-                        } else if (lowToHig == 0) {
-                            // low = hig < piv
-                            list.set(pivIdx, hig);
-                            list.set(higIdx, piv);
-                            pivIdx = higIdx;
+                            pivIdx = swapPivAndHigh(list, pivIdx, higIdx, piv, hig);
                         } else {
                             // high < low < piv
-                            list.set(lowIdx, hig);
-                            list.set(pivIdx, low);
-                            list.set(higIdx, piv);
-                            pivIdx = higIdx;
+                            pivIdx = rotateUp(list, pivIdx, lowIdx, higIdx, piv, low, hig);
                         }
                     }
                 } else if (lowToPiv == 0) {
                     // low = piv
-                    if (pivToHig < 0) {
+                    if (pivToHig <= 0) {
                         // low = piv < hig
-                        doNothing();
-                    } else if (pivToHig == 0) {
-                        // low = piv = hig
                         doNothing();
                     } else {
                         // hig < piv = low
                         if (pivIdx == lowIdx) {
-                            list.set(pivIdx, hig);
-                            list.set(higIdx, piv);
-                            pivIdx = higIdx;
+                            pivIdx = swapPivAndHigh(list, pivIdx, higIdx, piv, hig);
                         } else {
-                            list.set(lowIdx, hig);
-                            list.set(higIdx, low);
+                            swapLowAndHigh(list, lowIdx, higIdx, low, hig);
                         }
                     }
                 } else {
@@ -79,36 +60,23 @@ public class QuickSortAlgorithmInPlace<T extends Comparable<T>> implements SortA
                     if (pivToHig < 0) {
                         // piv < low, piv < hig
                         var lowToHig = low.compareTo(hig);
-                        if (lowToHig < 0) {
+                        if (lowToHig <= 0) {
                             // piv < low < hig
-                            list.set(lowIdx, piv);
-                            list.set(pivIdx, low);
-                            pivIdx = lowIdx;
-                        } else if (lowToHig == 0) {
-                            // piv < low = hig
-                            list.set(lowIdx, piv);
-                            list.set(pivIdx, low);
-                            pivIdx = lowIdx;
+                            pivIdx = SwapPivAndLow(list, pivIdx, lowIdx, piv, low);
                         } else {
                             // piv < hig < low
-                            list.set(lowIdx, piv);
-                            list.set(pivIdx, low);
-                            pivIdx = lowIdx;
+                            pivIdx = SwapPivAndLow(list, pivIdx, lowIdx, piv, low);
                         }
                     } else if (pivToHig == 0) {
                         // piv = hig < low
                         if (pivIdx == higIdx) {
-                            list.set(pivIdx, low);
-                            list.set(lowIdx, piv);
-                            pivIdx = lowIdx;
+                            pivIdx = swapPivAndHigh(list, pivIdx, lowIdx, piv, low);
                         } else {
-                            list.set(lowIdx, hig);
-                            list.set(higIdx, low);
+                            swapLowAndHigh((List<T>) list, lowIdx, higIdx, low, hig);
                         }
                     } else {
                         // hig < piv < low
-                        list.set(lowIdx, hig);
-                        list.set(higIdx, low);
+                        swapLowAndHigh(list, lowIdx, higIdx, low, hig);
                     }
                 }
 
@@ -119,6 +87,27 @@ public class QuickSortAlgorithmInPlace<T extends Comparable<T>> implements SortA
             sort(list.subList(0, pivIdx));
             sort(list.subList(pivIdx + 1, length));
         }
+    }
+
+    private int rotateUp(List<T> list, int pivIdx, int lowIdx, int higIdx, T piv, T low, T hig) {
+        list.set(lowIdx, hig);
+        pivIdx = swapPivAndHigh(list, pivIdx, higIdx, piv, low);
+        return pivIdx;
+    }
+
+    private void swapLowAndHigh(List<T> list, int lowIdx, int higIdx, T low, T hig) {
+        list.set(lowIdx, hig);
+        list.set(higIdx, low);
+    }
+
+    private int SwapPivAndLow(List<T> list, int pivIdx, int lowIdx, T piv, T low) {
+        swapLowAndHigh(list, lowIdx, pivIdx, low, piv);
+        return lowIdx;
+    }
+
+    private int swapPivAndHigh(List<T> list, int pivIdx, int lowIdx, T piv, T low) {
+        swapLowAndHigh(list, pivIdx, lowIdx, piv, low);
+        return lowIdx;
     }
 
     private static void doNothing() {
