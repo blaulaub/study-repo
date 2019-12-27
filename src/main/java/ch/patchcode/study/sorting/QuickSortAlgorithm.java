@@ -8,15 +8,16 @@ public class QuickSortAlgorithm<T extends Comparable<T>> implements SortAlgorith
     @Override
     public void sort(List<T> list) {
 
-        if (list.size() > 1) {
+        final var length = list.size();
+        if (length > 1) {
 
             var buffer = new ArrayList<>(list);
 
-            var pivIdx = list.size() / 2;
+            var pivIdx = length / 2;
             var piv = list.get(pivIdx);
 
             var lowIdx = 0;
-            var higIdx = list.size() - 1;
+            var higIdx = length - 1;
 
             for (var i = 0; i < pivIdx; ++i) {
                 var e = list.get(i);
@@ -27,7 +28,7 @@ public class QuickSortAlgorithm<T extends Comparable<T>> implements SortAlgorith
                 }
             }
 
-            for (var i = pivIdx + 1; i < list.size(); ++i) {
+            for (var i = pivIdx + 1; i < length; ++i) {
                 var e = list.get(i);
                 if (e.compareTo(piv) < 0) {
                     buffer.set(lowIdx++, e);
@@ -41,7 +42,7 @@ public class QuickSortAlgorithm<T extends Comparable<T>> implements SortAlgorith
             sort(buffer.subList(0, lowIdx));
             sort(buffer.subList(lowIdx + 1, higIdx));
 
-            for (var i = 0; i < list.size(); ++i) {
+            for (var i = 0; i < length; ++i) {
                 list.set(i, buffer.get(i));
             }
         }

@@ -71,6 +71,62 @@ abstract class SortAlgorithmTest<T extends SortAlgorithm<Integer>> {
     }
 
     @Test
+    void sortSet5of7_succeeds() {
+
+        var list = pseudoRandom(5, 7);
+        getAlgorithm().sort(list);
+        assertIterableEquals(sorted(list), list);
+    }
+
+    @Test
+    void sortSet7of5_succeeds() {
+
+        var list = pseudoRandom(7, 5);
+        getAlgorithm().sort(list);
+        assertIterableEquals(sorted(list), list);
+    }
+
+    @Test
+    void sortSet7of13_succeeds() {
+
+        var list = pseudoRandom(7, 13);
+        getAlgorithm().sort(list);
+        assertIterableEquals(sorted(list), list);
+    }
+
+    @Test
+    void sortSet11of5_succeeds() {
+
+        var list = pseudoRandom(11, 5);
+        getAlgorithm().sort(list);
+        assertIterableEquals(sorted(list), list);
+    }
+
+    @Test
+    void sortSet11of7_succeeds() {
+
+        var list = pseudoRandom(11, 7);
+        getAlgorithm().sort(list);
+        assertIterableEquals(sorted(list), list);
+    }
+
+    @Test
+    void sortSet11of17_succeeds() {
+
+        var list = pseudoRandom(11, 17);
+        getAlgorithm().sort(list);
+        assertIterableEquals(sorted(list), list);
+    }
+
+    @Test
+    void sortSet13of5_succeeds() {
+
+        var list = pseudoRandom(13, 5);
+        getAlgorithm().sort(list);
+        assertIterableEquals(sorted(list), list);
+    }
+
+    @Test
     void sortLargerSet_succeeds() {
 
         var list = pseudoRandom(13463, 9967);
