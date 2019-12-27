@@ -6,7 +6,9 @@ the sole goal is to become a bit more familiar with some basic algorithms.
 
 ## Some Algorithms
 
-- bubble sort (the ugly) 
+- bubble sort (the ugly)
+- quick sort
+- merge sort
 
 ## Key Criteria
 
