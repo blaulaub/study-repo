@@ -12,6 +12,9 @@ import static org.junit.jupiter.api.Assertions.assertIterableEquals;
 
 abstract class SortAlgorithmTest<T extends SortAlgorithm<Integer>> {
 
+    private static final List<Integer> PSEUDO_RANDOM_13463_OF_9967 = pseudoRandom(13463, 9967);
+    private static final List<Integer> SORTED_13463_OF_9967 = sorted(PSEUDO_RANDOM_13463_OF_9967);
+
     abstract T getAlgorithm();
 
     @Test
@@ -73,17 +76,17 @@ abstract class SortAlgorithmTest<T extends SortAlgorithm<Integer>> {
     @Test
     void sortSet5of7_succeeds() {
 
-        var list = pseudoRandom(5, 7);
+        var list = new ArrayList<>(pseudoRandom(5, 7));
         getAlgorithm().sort(list);
-        assertIterableEquals(sorted(list), list);
+        assertIterableEquals(sorted(pseudoRandom(5, 7)), list);
     }
 
     @Test
     void sortSet7of5_succeeds() {
 
-        var list = pseudoRandom(7, 5);
+        var list = new ArrayList<>(pseudoRandom(7, 5));
         getAlgorithm().sort(list);
-        assertIterableEquals(sorted(list), list);
+        assertIterableEquals(sorted(pseudoRandom(7, 5)), list);
     }
 
     @Test
@@ -129,12 +132,12 @@ abstract class SortAlgorithmTest<T extends SortAlgorithm<Integer>> {
     @Test
     void sortLargerSet_succeeds() {
 
-        var list = pseudoRandom(13463, 9967);
+        var list = new ArrayList<>(PSEUDO_RANDOM_13463_OF_9967);
         getAlgorithm().sort(list);
-        assertIterableEquals(sorted(list), list);
+        assertIterableEquals(SORTED_13463_OF_9967, list);
     }
 
-    private List<Integer> pseudoRandom(int size, int increment) {
+    private static List<Integer> pseudoRandom(int size, int increment) {
 
         var list = new ArrayList<Integer>(size);
         for (var i = 0; i < size; ++i) {
@@ -149,7 +152,7 @@ abstract class SortAlgorithmTest<T extends SortAlgorithm<Integer>> {
         return list;
     }
 
-    private List<Integer> sorted(List<Integer> unsorted) {
+    private static List<Integer> sorted(List<Integer> unsorted) {
 
         return unsorted.stream().sorted().collect(toList());
     }
